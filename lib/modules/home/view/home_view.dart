@@ -10,14 +10,53 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> implements HomeViewModelDelegate {
+  HomeViewModel get viewModel => widget.viewModel;
+
+  @override
+  void initState() {
+    viewModel.delegate = this;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Local File transfer"),
+        title: const Text("File Sharing"),
       ),
-      body: Container(),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                viewModel.navigateToSendView(context);
+              },
+              child: const SizedBox(
+                width: 60,
+                child: Text(
+                  'Send',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {
+                viewModel.navigateToReceiveView(context);
+              },
+              child: const SizedBox(
+                width: 60,
+                child: Text(
+                  'Receive',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.blueGrey,
     );
   }
