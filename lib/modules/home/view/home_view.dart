@@ -16,6 +16,7 @@ class _HomeViewState extends State<HomeView> implements HomeViewModelDelegate {
   @override
   void initState() {
     viewModel.delegate = this;
+    viewModel.textChannelFunc();
     super.initState();
   }
 
