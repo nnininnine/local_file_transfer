@@ -32,10 +32,14 @@ class _SendViewState extends State<SendView> implements SendViewModelDelegate {
               child: const Text('Select File'),
             ),
             const SizedBox(height: 16),
-            Text("Selected file: ${viewModel.selectedFilePath}"),
+            Text("Selected file: ${viewModel.selectedFile?.name ?? ''}"),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: viewModel.selectedFilePath != null ? () {} : null,
+              onPressed: viewModel.selectedFile != null
+                  ? () {
+                      viewModel.share(context);
+                    }
+                  : null,
               child: const Text('Send'),
             ),
           ],

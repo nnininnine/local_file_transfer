@@ -35,12 +35,6 @@ class HomeViewModel {
     })));
   }
 
-  void navigateToBrowseView(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: ((context) {
-      return const BrowseView();
-    })));
-  }
-
   void navigateToReceiverView(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: ((context) {
       return const ReceiverView();

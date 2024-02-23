@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
@@ -54,7 +55,7 @@ class _ReceiverViewState extends State<ReceiverView> {
     await nearbyService.init(
       serviceType: 'mp-connection',
       deviceName: devInfo,
-      strategy: Strategy.P2P_CLUSTER,
+      strategy: Strategy.Wi_Fi_P2P,
       callback: (isRunning) async {
         if (isRunning) {
           await nearbyService.stopAdvertisingPeer();
@@ -69,9 +70,6 @@ class _ReceiverViewState extends State<ReceiverView> {
     subscription =
         nearbyService.stateChangedSubscription(callback: (devicesList) {
       devicesList.forEach((element) {
-        // print(
-        // " deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
-
         if (Platform.isAndroid) {
           if (element.state == SessionState.connected) {
             nearbyService.stopBrowsingForPeers();
@@ -91,10 +89,17 @@ class _ReceiverViewState extends State<ReceiverView> {
 
     receivedDataSubscription =
         nearbyService.dataReceivedSubscription(callback: (data) {
-      if (kDebugMode) {
-        print("dataReceivedSubscription: ${jsonEncode(data)}");
-      }
+      saveFile(data['message'] as String);
     });
+  }
+
+  void saveFile(String data) async {
+    print('save file');
+    Map<String, dynamic> output = jsonDecode(data);
+    var outputData = Uint8List.fromList(output["data"]!.codeUnits);
+    await FileSaver.instance.saveFile(
+        name: output['name']!, bytes: outputData, mimeType: MimeType.jpeg);
+    print("saved");
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:local_file_transfer/modules/home/view/home_view.dart';
 import 'package:local_file_transfer/modules/home/view_model/home_view_model.dart';
 
 void main() {
+  debugPrint = (String? message, {int? wrapWidth}) {};
   runApp(const MyApp());
 }
 

@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> implements HomeViewModelDelegate {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                viewModel.navigateToBrowseView(context);
+                viewModel.navigateToSendView(context);
               },
               child: const SizedBox(
                 width: 60,
