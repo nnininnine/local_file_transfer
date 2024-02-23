@@ -45,5 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_mp-connection._tcp</string>
+	</array>
+	<key>UIRequiresPersistentWiFi</key>
+	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Reason for using Bonjour that the user can understand</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Require Bluetooth usage</string>
 </dict>
 </plist>

@@ -21,6 +21,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.Random
 
+
 class HotspotManager private constructor(context: Context) {
     // Properties
 
@@ -53,7 +54,7 @@ class HotspotManager private constructor(context: Context) {
     }
 
     // Methods
-    fun startHotspot(context: Context) {
+    fun startHotspot(context: Context, onSuccessListener: OnSuccessListener, onFailureListener: OnFailureListener) {
         val providerEnabled: Boolean =
             locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
@@ -71,7 +72,7 @@ class HotspotManager private constructor(context: Context) {
                             try {
                                 ssid = reservation.wifiConfiguration!!.SSID
                                 password = reservation.wifiConfiguration!!.preSharedKey
-//                                onSuccessListener.onSuccess(ssid, password)
+                                onSuccessListener.onSuccess(ssid, password)
                             } catch (e: java.lang.Exception) {
                                 e.printStackTrace()
                             }
@@ -106,7 +107,7 @@ class HotspotManager private constructor(context: Context) {
                 wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
                 wifiManager.setWifiEnabled(false)
                 setWifiApEnabled(wifiConfiguration, true)
-//                onSuccessListener.onSuccess(ssid, password)
+                onSuccessListener.onSuccess(ssid, password)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -118,7 +119,7 @@ class HotspotManager private constructor(context: Context) {
     }
 
     @Throws(java.lang.Exception::class)
-    private fun setWifiApEnabled(wifiConfiguration: WifiConfiguration, enable: Boolean) {
+    private fun setWifiApEnabled(wifiConfiguration: WifiConfiguration?, enable: Boolean) {
         val method = wifiManager.javaClass.getMethod(
             "setWifiApEnabled",
             WifiConfiguration::class.java,
@@ -127,14 +128,22 @@ class HotspotManager private constructor(context: Context) {
         method.invoke(wifiManager, wifiConfiguration, enable)
     }
 
-    private fun isWifiApEnabled(): Boolean {
+    fun disableWifiAp() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                reservation?.close()
+                reservation!!.close()
+            } else {
+                setWifiApEnabled(null, false)
             }
-//            else {
-//
-//            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun isWifiApEnabled(): Boolean {
+        try {
+            val method = wifiManager.javaClass.getMethod("isWifiApEnabled")
+            return method.invoke(wifiManager) as Boolean
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -156,11 +165,11 @@ class HotspotManager private constructor(context: Context) {
     }
 
     // Interfaces
-    interface onFailureListener {
+    fun interface OnFailureListener {
         fun onFailure(failureCode: Int, e: Exception?)
     }
 
-    interface OnSuccessListener {
+    fun interface OnSuccessListener {
         fun onSuccess(ssid: String, password: String)
     }
 

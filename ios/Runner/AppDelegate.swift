@@ -13,7 +13,7 @@ import UIKit
         myChannel.setMethodCallHandler {
             (call: FlutterMethodCall, result: @escaping FlutterResult) in
             if call.method == "helloWorld" {
-                result("Hello World from iOS <3")
+                result(self.helloWorld())
             } else {
                 result(FlutterMethodNotImplemented)
             }
@@ -21,5 +21,9 @@ import UIKit
 
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    private func helloWorld() -> String {
+        return "Hello World from iOS <3"
     }
 }

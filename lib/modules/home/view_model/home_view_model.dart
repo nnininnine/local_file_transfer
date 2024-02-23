@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_file_transfer/modules/browse/view/browse_view.dart';
 import 'package:local_file_transfer/modules/receive/view/receive_view.dart';
 import 'package:local_file_transfer/modules/receive/view_model/receive_view_model.dart';
+import 'package:local_file_transfer/modules/receiver/receiver_view.dart';
 import 'package:local_file_transfer/modules/send/view/send_view.dart';
 import 'package:local_file_transfer/modules/send/view_model/send_view_model.dart';
 
@@ -30,6 +32,18 @@ class HomeViewModel {
   void navigateToReceiveView(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: ((context) {
       return ReceiveView(viewModel: ReceiveViewModel());
+    })));
+  }
+
+  void navigateToBrowseView(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: ((context) {
+      return const BrowseView();
+    })));
+  }
+
+  void navigateToReceiverView(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: ((context) {
+      return const ReceiverView();
     })));
   }
 }

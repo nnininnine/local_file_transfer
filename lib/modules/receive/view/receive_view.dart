@@ -17,7 +17,18 @@ class _ReceiveViewState extends State<ReceiveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Receive")),
-      body: const Center(),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  print("on tap share hotspot");
+                  viewModel.shareHotspot();
+                },
+                child: const Text("Share Hotspot"))
+          ],
+        ),
+      ),
       backgroundColor: Colors.yellow[200],
     );
   }
