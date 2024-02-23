@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_file_transfer/modules/browse/view/browse_view.dart';
 import 'package:local_file_transfer/modules/receive/view/receive_view.dart';
 import 'package:local_file_transfer/modules/receive/view_model/receive_view_model.dart';
 import 'package:local_file_transfer/modules/receiver/receiver_view.dart';
